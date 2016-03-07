@@ -30,7 +30,7 @@ float det(int n , float a [][n] )
             }
          }
          d += pow(-1.0,k) * a[0][k] * det(n-1,m);
-         //when k is pair a sum happens, when k is odd a subtraction happens
+         //when k is even a sum happens, when k is odd a subtraction happens
 	  }
    
    }
@@ -48,8 +48,8 @@ void forwardSubstituition (int n, float a[][n], float b [])
      c[i] = b[i]; 
  
  for(i=0;i<n;i++) // Rt * y = b
-        {
-			if (i>0)
+     {
+        if (i>0)
             for(j=0;j<=(i-1);j++)
                 c[i] = c[i] - a[i][j] * c[j];
           
@@ -59,15 +59,15 @@ void forwardSubstituition (int n, float a[][n], float b [])
            b[i] = c[i];    
             
          
-}
+      }
 
 void backSubstituition (int n, float a[][n], float b [])
 {
 	int i,j;
- float c[n];
+        float c[n];
  
- for(i=0;i<n;i++)
-     c[i] = b[i]; 
+        for(i=0;i<n;i++)
+            c[i] = b[i]; 
      
 	for(i=n-1;i>=0;i--) // R * x  = y
         {
@@ -158,15 +158,15 @@ int main ()
     for(i=0;i<n;i++)
         for(j=0;j<n;j++)
             {
-				scanf("%f", &a[i][j]);
+	        scanf("%f", &a[i][j]);
 				
             }
         w = det(n,a);
         if(!w)
         {
-			printf("This matrix is singular ");
-			return 0;
-		}
+	    printf("This matrix is singular ");
+		return 0;
+	}
 		
 	
 		
@@ -175,18 +175,16 @@ int main ()
        cholesky(n,a,at);
        
        printf("The Rt factor of Cholesky is: \n");
-       for (i=0;i<n;i++)
-           {
-			   for(j=0;j<n;j++)
+       for (i=0;i<n;i++){
+	    for(j=0;j<n;j++)
                printf("%f ",at[i][j]);
              printf("\n");
            }
            printf("\n");
            
        printf("The R factor of Cholesky is: \n");
-       for (i=0;i<n;i++)
-          {
-			   for(j=0;j<n;j++)
+       for (i=0;i<n;i++){
+           for(j=0;j<n;j++)
                printf("%f ",a[i][j]);
              printf("\n");
            }
