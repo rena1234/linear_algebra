@@ -34,29 +34,29 @@ float infinitnorm (int n, float b [])
 
 int main()
 {
-	int n,i,j;
-	float norm;
-	float support;
-	printf("tamanho da Matriz\n");
-	scanf("%d", &n);
-	float a[n][n];
-	float x[n],xc[n],xc2[n];
+    int n,i,j;
+    float norm;
+    float support;
+    printf("Enter the matrix size\n");
+    scanf("%d", &n);
+    float a[n][n];
+    float x[n],xc[n],xc2[n];
 	
-	for(i=0;i<n;i++)
-	    xc[i] = 0;
+    for(i=0;i<n;i++)
+	xc[i] = 0;
 	    
-	printf("Digite A\n");
-	 for(i=0;i<n;i++)
+    printf("Enter A matrix values\n");
+    for(i=0;i<n;i++)
         for(j=0;j<n;j++)
-         scanf("%f", &a[i][j]);
+           scanf("%f", &a[i][j]);
 
-     printf("digite o auto-vetor inicial\n");
-     for(i=0;i<n;i++)
-      scanf("%f", &x[i]);
+    printf("Enter a initial eigen-vector\n");
+    for(i=0;i<n;i++)
+       scanf("%f", &x[i]);
      
   do
   {
-     // achando autovetor 
+     // finding eigen-vector 
      for(i=0;i<n;i++)
         for(j=0;j<n;j++)
              xc[i]+= a[i][j] * x[j];
@@ -100,7 +100,7 @@ norm = 0;
    for (i=0;i<n;i++)
         support += x[i]*x[i];	
         
- printf("autovalor dominante aproximado\n");        
+ printf("aproximated dominant eigen-value is: \n");        
  printf("%f", norm/support);
  
     
