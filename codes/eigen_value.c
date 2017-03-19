@@ -1,110 +1,64 @@
 
-
-
 #include <stdio.h>
 #include <math.h>
 
-float infinitnorm (int n, float b [])
+double infinitnorm (int n, float b [])
 {
 	//for vectors
 	int i;
-	float c[n],m;
+	double c[n],m;
 	
-	for(i=0;i<n;i++)
+	for(int i = 0;i<n;i++)
 	   c[i]=b[i];
 	   
 	m = c[1];   
 	
-	for(i=0;i<n;i++)
+	for(int i = 0;i<n;i++)
 	{
 	   c[i]=(c[i]*c[i]);
 	   c[i]=sqrt(c[i]);
 	}
-	for(i=0;i<n;i++)
+	for(int i = 0;i<n;i++)
 	    if(m<c[i])
 	    m = c[i];
 	    
 	    return m;
-	   
-	   
-	   
-	 
-	
 }
-
-int main()
-{
-    int n,i,j;
-    float norm;
-    float support;
-    printf("Enter the matrix size\n");
-    scanf("%d", &n);
-    float a[n][n];
-    float x[n],xc[n],xc2[n];
-	
-    for(i=0;i<n;i++)
-	xc[i] = 0;
-	    
-    printf("Enter A matrix values\n");
-    for(i=0;i<n;i++)
-        for(j=0;j<n;j++)
-           scanf("%f", &a[i][j]);
-
+int main(){
+    printf("Enter the matrix size\n"); int n; scanf("%d", &n);
+    printf("Enter A matrix values\n");double a[n][n];
+    for(int i = 0;i<n;i++) for(int j = 0;j<n;j++) scanf("%f", &a[i][j]);
     printf("Enter a initial eigen-vector\n");
-    for(i=0;i<n;i++)
-       scanf("%f", &x[i]);
-     
-  do
-  {
-     // finding eigen-vector 
-     for(i=0;i<n;i++)
-        for(j=0;j<n;j++)
-             xc[i]+= a[i][j] * x[j];
-             
-     norm = infinitnorm(n,xc);
-     
-             
-     // simplifying  the vector       
-     for(i=0;i<n;i++)
-             xc[i]=(xc[i]/norm);
-             
-     // copying to  x 
-     for(i=0;i<n;i++)
-      {
-		  xc2[i] = sqrt(xc[i]*xc[i]) - sqrt(x[i]*x[i]);
-	  }  
-	  
-	  norm = infinitnorm(n,xc2);
-	       
-    for(i=0;i<n;i++)
-      {
-		  x[i] = xc[i];
-		  xc[i] = 0;
-	  }
+    double eigenVec[n]; for(i = 0; i < n; i++) scanf("%f", &x[i]);
     
-  
+    double norm;
+    do{
+        double newEigenVec; for(int i = 0; i < n; i++) newEigenVec[i] = 0;     
+        // finding eigen-vector 
+        for(int i = 0;i<n;i++) 
+            for(int j = 0;j<n;j++) newEigenVec[i] += a[i][j] * eigenVec[j];
+             
+        norm = infinitnorm(n,newEigenVec);         
+       // vector normalization       
+       for(int i = 0;i<n;i++) newEigenVec[i]=(newEigenVec[i]/norm);
       
-           
-  }
- while ( norm > 0.0000001 );
+       double aux[n];
+       for(int i = 0;i<n;i++)
+           aux[i] = sqrt(newEigenVec[i]*newEigenVec[i]) 
+              - sqrt(eigenVec[i] * eigenVec[i]);
+      
+       norm = infinitnorm(n,aux);	       
+       for(int i = 0;i<n;i++) x[i] = xc[i];
+    }while ( norm > 0.0000001 );
     
-    // finding eigen-value
-  for(i=0;i<n;i++)
-        for(j=0;j<n;j++)
-             xc[i]+= a[i][j] * x[j];
-
-norm = 0;
-  for(i=0;i<n;i++)
-  // reusing norm variable
-		norm += xc[i]*x[i];
-   for (i=0;i<n;i++)
-        support += x[i]*x[i];	
+   // finding eigen-value
+   double aux[n] ; for(int i = 0; i < n; i++) aux[i] = 0;
+   for(int i = 0;i<n;i++) 
+       for(int j = 0;j<n;j++) aux[i] += a[i][j] * eigenVec[j];
+   double acm = 0; for(int i = 0;i<n;i++) acm += xc[i] * eigenVec[i];
+   double pInternoEvec = 0; 
+   for (i=0;i<n;i++)  pInternoEvec += pow(eigenVec[i],2);	
         
  printf("aproximated dominant eigen-value is: \n");        
- printf("%f", norm/support);
- 
-    
-         
-	return 0;
+ printf("%f\n", acm / pInternoEvec);        
 }
-
