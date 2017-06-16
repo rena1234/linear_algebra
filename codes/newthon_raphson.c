@@ -1,19 +1,20 @@
 #include <stdio.h>
+#include <stdbool.h>
     
 float f(float x, float coef[], int order){
     int aux = order; float s = 0;	
     for(int j = 0; j < order; j++){
-        float m = 1; for(i = 0; i < aux; i++) m *= x;
+        float m = 1; for(int i = 0; i < aux; i++) m *= x;
         s += m * coef[j]; aux--;
     } 
     return s + coef[order];	
 }
 
 float df(float x,float coef[], int order){
-    int aux = order-1; float s = 0;
+    int aux = order - 1; float s = 0;
     for(int j = 0; j < order; j++){
         float m = 1; for(int i = 0; i < aux; i++) m *= x;
-        s+=m*(gc+1)*coef[j]; aux--;
+        s += m * (aux + 1) * coef[j]; aux--;
      }
      return s;
 }
@@ -26,31 +27,33 @@ int main(){
     int mni; scanf("%d", &mni);
     
     float coef[order+1];
-    for(int i=0;i<order+1;i++){
+    for(int i = 0; i < order + 1; i++){
         printf("Enter the coeficient of x^%d, type 0 if it doesn't exist\n",
-	        order-i);
+	        order - i);
         scanf("%f", &coef[i]);
     }	
     printf("\n");
     
-    float fx = f(x,coef,order);
-    if (fx<t){
-       printf("%f is a aproximated root of its polynomial\n\n", x);
-       printf("f(aproximated root) is %f\n",f(x,coef,g));
+    float fx = f(x, coef, order);
+	bool fail = false;
+    if (fx < t){
+       printf("%f is a aproximated root of the polynomial\n\n", x);
+       printf("f(aproximated root) is %f\n",f(x, coef, order));
     }else{ 
         for(int i = 0; i < mni; i++){       
-	    x = x - (fx / df(x, coef, g)); float newFx = f(x,coef,g);
-	    if(fx <= newFx){
-	        printf("it does not converge\n"); bool fail = true; break;
+	    x = x - (fx / df(x, coef, order)); float newFx = f(x, coef, order);
+        if(fx <= newFx){
+	        printf("it does not converge\n"); fail = true; break;
 	    }
 	    if(newFx<t) break;
 	    fx = newFx;
 	}
-        if(f(x,coef,g) > t && !fail){
-            printf("it does not converge or the number of iterations are insuficient");
+        if(f(x, coef, order) > t && !fail){
+            printf("it does not converge");
+            printf("or the number of iterations are insuficient");
         }else if(!fail){
            printf("%f is a aproximated root of its polynomial\n", x);
-           printf("f(aproximated root) is %f\n",f(x,coef,g));
+           printf("f(aproximated root) is %f\n",f(x, coef, order));
         }
     }
 }
