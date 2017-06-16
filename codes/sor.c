@@ -1,17 +1,11 @@
-
 #include<stdio.h>
 #include<math.h>
 
-double norm2(int n, float b[]){
-    /*
-     * vector's norm 2
-     */
-    double s = 0;
-    for(int i = 0; i < n; i++ ) s += b[i] * b[i];
-    s = sqrt(s); return s;
+double norm2(int n, double b[]){
+    double s = 0; for(int i = 0; i < n; i++ ) s += b[i] * b[i]; return sqrt(s);
 }
 
-void sor( int n, double w, float a[][n], float b[], float x[] ){	
+void sor( int n, double w, double a[][n], double b[], double x[] ){	
     int i,j;
     for(i = 0; i < n; i++){
        double sub1 = 0; float sub2 = 0;
@@ -33,13 +27,13 @@ int main(){
     for(int i = 0; i < n; i++) scanf("%lf",&x[i]);       
     printf("enter w value between 0 and 2\n"); double w;
     do scanf("%lf",&w); while (!(w > 0 && w < 2));
-    
+    double resVec[n];
     do{
-        int resVec; for(int i = 0; i < n; i++) resVec[i]=0;
+        for(int i = 0; i < n; i++) resVec[i]=0;
 	sor(n,w,a,b,x);
 	for(int i = 0; i < n; i++) 
             for(int j = 0; j < n; j++) resVec[i] += a[i][j] * x[j];
         for(int i=0;i<n;i++) resVec[i] -= b[i];     	  
     }while(norm2(n,resVec) > tol);
-    printf("Sor result\n"); for(i=0;i<n;i++) printf("%lf\n",x[i]);
+    printf("Sor result\n"); for(int i = 0; i < n;i++) printf("%lf\n", x[i]);
 }
