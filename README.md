@@ -1,3 +1,3 @@
 # linear_algebra
-Algorithms to solve linear systems, newthon-raphson to find a root of a polynomial, and gram-schmidt process for orthonormalization;
+Algorithms for solving linear systems, Newton-Raphson for finding roots of polynomials, and the Gram-Schmidt process for orthonormalization;
 This work is based on the book: Fundamentals of Matrix Computations - David S. Watkins
